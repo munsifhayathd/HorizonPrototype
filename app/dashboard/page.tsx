@@ -78,8 +78,14 @@ export default function DashboardPage() {
             />
           ))}
         </div>
-        <div className="surface-card flex items-center justify-center p-6 lg:min-w-[200px]">
+        <div className="surface-card flex flex-col items-center justify-center gap-3 p-6 lg:min-w-[200px]">
           <AutonomyGauge value={87} />
+          <Link
+            href="/dashboard/user-testing"
+            className="text-xs font-medium text-primary hover:underline"
+          >
+            View usability report →
+          </Link>
         </div>
       </section>
 
