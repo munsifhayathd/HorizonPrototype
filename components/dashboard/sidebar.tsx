@@ -8,6 +8,7 @@ import {
   ListTodo,
   Settings,
   LogOut,
+  ClipboardCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,7 @@ const NAV = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { label: "Pipeline", href: "/dashboard#pipeline", icon: FolderKanban },
   { label: "Activity", href: "/dashboard#activity", icon: ListTodo },
+  { label: "User testing", href: "/dashboard/user-testing", icon: ClipboardCheck },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
