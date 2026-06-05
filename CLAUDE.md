@@ -1,53 +1,155 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code working in this repository.
+
+## What this is
+
+**Horizon Digital — internal demo prototype.** A small Next.js 14 App Router
+app used as a visual stand-in during the "autonomous delivery" showcase: edit
+a value → push → the live URL updates in place ~60s later. **Every piece of
+data on the dashboard is mocked.** This is not a real product — there is no
+auth, no API, no database.
+
+Live: https://horizon-prototype-fawn.vercel.app
 
 ## Commands
 
 ```bash
-yarn dev          # start Next.js dev server on :3000
-yarn build        # production build (will fail until the missing modules below are created)
-yarn start        # serve the production build
-yarn lint         # next lint (eslint-config-next)
+npm run dev       # next dev — :3000 (auto-picks :3001 if busy)
+npm run build     # production build (currently green)
+npm run start     # serve the production build
+npm run lint      # next lint
 ```
 
-There is no test runner configured in this repo.
+`yarn` and `bun` work too — there's no enforced package manager (both
+`yarn.lock` and `package-lock.json` are committed; choose one and stick to
+it locally).
 
-## Architecture
+No test runner.
 
-Next.js 14 App Router prototype. The user journey is:
+## The demo flow
 
-`/` ([app/page.tsx](app/page.tsx)) → `/create` ([app/create/page.tsx](app/create/page.tsx)) → POST `/api/process-software` ([app/api/process-software/route.ts](app/api/process-software/route.ts))
+```
+/                  Get Started landing            (app/page.tsx)
+   ↓ "Get Started"
+/login             Mock credentials pre-filled    (app/login/page.tsx)
+   ↓ "Sign in" (650ms mock latency, no real auth)
+/dashboard         Sidebar + charts + ledger      (app/dashboard/page.tsx)
+   ↓ sidebar → Settings
+/dashboard/settings  Profile + notifications      (app/dashboard/settings/page.tsx)
+```
 
-The page at `/create` renders [components/software-form.tsx](components/software-form.tsx), a client component that posts `softwareDetails` + `email` + `files` as `multipart/form-data`. The API route is intended to:
+Mock credentials (pre-filled, accept anything): `brad@horizondigital.au` /
+`demo1234`. The mock principal is "Brad Mitchell" — see references in
+`app/login/page.tsx`, `app/dashboard/settings/page.tsx`, and
+`components/dashboard/sidebar.tsx`.
 
-1. Validate input (shared validator at [middleware/validation.ts](middleware/validation.ts) — imported by both the client form and the API route).
-2. Call OpenAI to generate raw prototype guidance.
-3. Pass the raw response through a structuring step.
-4. Email the structured instructions to the user (currently commented out in the route).
+## Where to edit the demo numbers
 
-The TypeScript path alias `@/*` resolves to the repo root (see [tsconfig.json](tsconfig.json)).
+All chart and feed data lives in **[lib/mock-data.ts](lib/mock-data.ts)**:
 
-## ⚠️ Broken imports in the API route
+- `adoptionCurve` — 12-month AI tooling adoption %
+- `lifecyclePipeline` — projects per lifecycle phase
+- `teamAdoption` — % adoption by team
+- `kpis` — the four hero KPI cards
+- `sparkA/B/C/D` — sparkline series for the KPI cards
+- `ledger` — recent ships feed (typed via `LedgerKind` union)
+- `practices` — sidebar/bottom-right practices list
 
-[app/api/process-software/route.ts](app/api/process-software/route.ts) imports four modules that **do not exist** in the repo:
+For the autonomous-delivery demo beat: edit any value here, commit, push,
+the live URL updates with the new number.
 
-- `@/lib/openai` — `generateInstructions(prompt, files)`
-- `@/utils/file-handler` — `handleFileUpload` (imported but not called)
-- `@/utils/email-service` — `sendEmailNotification(email, payload)` (currently commented out at the call site)
-- `@/services/instruction-generator` — `generatePrototypeInstructions(rawResponse)`
+## Stack
 
-`yarn build` and any request to `/api/process-software` will fail until these are created. The `openai` and `nodemailer` packages are already in [package.json](package.json), so the intent is clearly for these files to be implemented locally. Required env vars (e.g. `OPENAI_API_KEY`, SMTP creds for nodemailer) are not documented anywhere — there is no `.env.example`.
+- Next.js 14.2 App Router (no `pages/`)
+- React 18, TypeScript
+- Tailwind CSS — design tokens in `app/globals.css`, palette extended in
+  `tailwind.config.ts`
+- **recharts** for the chart components (`components/charts/*.tsx`)
+- `lucide-react` icons
+- Fonts via `next/font/local` (Geist Sans + Mono in `app/fonts/`) and
+  `next/font/google` (Instrument Serif) — wired in `app/layout.tsx`
+- `@/*` path alias → repo root (see `tsconfig.json`)
 
-## shadcn/ui is configured but not installed
+## Component map
 
-[components.json](components.json) is set up (style: new-york, base: neutral, CSS variables, lucide icons) and [tailwind.config.ts](tailwind.config.ts) already wires the shadcn token names (`hsl(var(--primary))` etc.). However:
+```
+components/
+├── charts/
+│   ├── adoption-line-chart.tsx    AreaChart — AI tooling adoption
+│   ├── pipeline-bar-chart.tsx     Horizontal BarChart — lifecycle pipeline
+│   ├── team-adoption-chart.tsx    BarChart — adoption by team
+│   ├── autonomy-gauge.tsx         Custom SVG radial gauge — Autonomy Index
+│   └── mini-sparkline.tsx         Inline sparkline for KPI cards
+├── dashboard/
+│   ├── sidebar.tsx                Left nav + account chip
+│   ├── chart-card.tsx             Frosted-card wrapper for charts
+│   └── stat-card.tsx              KPI tile with sparkline
+lib/
+├── utils.ts                       cn() helper (clsx + tailwind-merge)
+├── mock-data.ts                   ALL demo data
+└── chart-theme.ts                 Shared recharts colour/tooltip styling
+```
 
-- `app/globals.css` has not been audited here — verify the CSS variables (`--primary`, `--background`, …) are actually defined before assuming shadcn classes render correctly.
-- The aliased directories `@/components/ui`, `@/lib`, `@/lib/utils`, and `@/hooks` do not exist yet. Creating any shadcn component (`npx shadcn@latest add …`) will scaffold them on first use.
+## shadcn/ui
+
+`components.json` is configured (style: new-york, neutral, CSS variables,
+lucide icons) and the Tailwind theme exposes the shadcn token names
+(`hsl(var(--primary))`, etc., shimmed onto our palette in
+`app/globals.css`). But **no shadcn components are installed yet**.
+Running `npx shadcn@latest add <component>` will scaffold
+`@/components/ui` on first use.
+
+## Deploy
+
+Vercel project: **`horizon-prototype`** under team
+**`munsif-hayats-projects`** (Horizon Digital).
+
+Auto-deploy is connected to `main` on
+`github.com:munsifhayathd/HorizonPrototype`. The loop is:
+
+```
+git push origin main → Vercel builds (~60s) → live URL updates in place
+```
+
+Stable production aliases (pick whichever you prefer to share):
+
+| URL | Note |
+|---|---|
+| `horizon-prototype-fawn.vercel.app` | Shortest / demo URL |
+| `horizon-prototype-munsif-hayats-projects.vercel.app` | Team-scoped |
+| `horizon-prototype-munsifhayathd-munsif-hayats-projects.vercel.app` | Author-scoped |
+
+Per-deployment URLs (with the random hash) exist for rollback/previews —
+**don't share them**; they're the source of "the URL changes every push"
+confusion.
+
+To deploy from CLI: `vercel --prod --scope munsif-hayats-projects` (must
+be `vercel login`'d as `munsif@horizondigital.au`).
+
+## Git remote quirks
+
+The origin uses the SSH host alias **`github.com-horizon`**:
+
+```
+git@github.com-horizon:munsifhayathd/HorizonPrototype.git
+```
+
+This routes through `~/.ssh/id_ed25519_horizon_digital` (the office
+GitHub key) rather than the default key, which auths as a different
+account. If you ever see `Permission to munsifhayathd/HorizonPrototype.git
+denied to munsifhayat`, the remote got rewritten to plain `github.com:` —
+restore the `-horizon` alias.
+
+Local git identity for this repo is set to `munsif@horizondigital.au` /
+`Munsif Hayat` so that CLI deploys pass Vercel's "git author must have
+access to the team" check.
 
 ## Conventions
 
-- App Router only — no `pages/` directory.
-- Validation logic lives in [middleware/validation.ts](middleware/validation.ts) and is shared between the client form and the server route; keep it framework-agnostic (no `next/*` imports) so both sides can use it.
-- The API route uses `formData()` (not JSON) because the form sends files.
+- App Router only — no `pages/` directory
+- Charts are recharts-based, not custom SVG (except `autonomy-gauge.tsx`
+  and `mini-sparkline.tsx`)
+- All demo data is in `lib/mock-data.ts` — don't scatter it
+- Editorial copy uses italics and roman numerals heavily; keep the
+  "annual report" tone if you extend it

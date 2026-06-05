@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Horizon Prototype
 
-## Getting Started
+Internal demo prototype for **Horizon Digital** — a small Next.js dashboard
+used in the "autonomous delivery" showcase. Every value on screen is mocked;
+the demo beat is to edit a number, push to `main`, and watch the live URL
+update in place.
 
-First, run the development server:
+**Live:** https://horizon-prototype-fawn.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Demo flow
+
+```
+/                    Get Started landing
+  → /login           Mock credentials pre-filled (brad@horizondigital.au / demo1234)
+  → /dashboard       Sidebar + charts + recent activity
+  → /dashboard/settings  Profile, notifications, teams
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev      # http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Where to edit the demo
 
-## Learn More
+All chart and feed data lives in [`lib/mock-data.ts`](lib/mock-data.ts).
+Change a value, commit, push — Vercel auto-deploys to the same URL in ~60s.
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS · recharts ·
+lucide-react · Instrument Serif + Geist.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Auto-deploy is wired from `main` to Vercel project `horizon-prototype` in
+team `munsif-hayats-projects`. See [CLAUDE.md](CLAUDE.md) for the full
+deploy notes, including SSH remote alias and CLI scope.
