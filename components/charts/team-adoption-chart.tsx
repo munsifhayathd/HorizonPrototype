@@ -42,7 +42,7 @@ export function TeamAdoptionChart({ data }: Props) {
         />
         <Tooltip
           contentStyle={chartTooltipStyle}
-          formatter={(value: number) => [`${value}%`, "Adoption"]}
+          formatter={(value) => [`${value}%`, "Adoption"]}
         />
         <Bar dataKey="value" fill={CHART_COLORS.secondary} radius={[0, 4, 4, 0]} />
       </BarChart>

@@ -41,7 +41,7 @@ export function AdoptionLineChart({ data }: Props) {
         />
         <Tooltip
           contentStyle={chartTooltipStyle}
-          formatter={(value: number) => [`${value}%`, "Adoption"]}
+          formatter={(value) => [`${value}%`, "Adoption"]}
         />
         <Area
           type="monotone"

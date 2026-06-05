@@ -6,7 +6,7 @@ import { FormEvent, useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("harrison@horizondigital.au");
+  const [email, setEmail] = useState("brad@horizondigital.au");
   const [password, setPassword] = useState("demo1234");
   const [submitting, setSubmitting] = useState(false);
 

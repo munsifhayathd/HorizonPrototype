@@ -42,7 +42,10 @@ export const sparkB = [14, 13, 12, 11, 10,  9,  8,  7,  6,  5,  4,  4,  3,  3, 3
 export const sparkC = [22, 28, 31, 33, 38, 39, 41, 42, 43, 44, 45, 46, 46, 47, 47];
 export const sparkD = [91, 92, 92, 93, 93, 94, 94, 95, 95, 95, 96, 96, 96, 96, 96.4];
 
-export const ledger = [
+export type LedgerKind = "autonomous" | "copilot" | "human";
+export const ledger: ReadonlyArray<{
+  id: string; title: string; practice: string; author: string; at: string; kind: LedgerKind; note: string;
+}> = [
   { id: "HD-2174", title: "Onboarding flow refresh",         practice: "Atelier",   author: "Autonomous", at: "2h ago",     kind: "autonomous", note: "shipped 14 commits across 6 files" },
   { id: "HD-2173", title: "Pricing page experiment",          practice: "Atelier",   author: "Autonomous", at: "6h ago",     kind: "autonomous", note: "A/B variant served to 8% traffic" },
   { id: "HD-2172", title: "API rate-limit dashboard",         practice: "Forge",     author: "M. Hayath",  at: "yesterday",  kind: "copilot",    note: "co-piloted, 2 reviewers" },

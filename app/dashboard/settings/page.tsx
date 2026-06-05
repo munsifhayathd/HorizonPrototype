@@ -26,8 +26,8 @@ export default function SettingsPage() {
       <section className="mt-6 space-y-6">
         <SettingsBlock title="Profile">
           <div className="surface-card space-y-4 p-5">
-            <Field label="Email" defaultValue="harrison@horizondigital.au" />
-            <Field label="Full name" defaultValue="Harrison Whittle" />
+            <Field label="Email" defaultValue="brad@horizondigital.au" />
+            <Field label="Full name" defaultValue="Brad Mitchell" />
             <Field label="Role" defaultValue="Admin" />
             <Field label="Timezone" defaultValue="Australia/Sydney (UTC+10)" />
           </div>

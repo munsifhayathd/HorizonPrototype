@@ -62,11 +62,11 @@ export function Sidebar() {
       <div className="border-t border-white/50 p-4">
         <div className="flex items-center gap-3 rounded-lg bg-white/40 p-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-violet-400/20 text-sm font-medium text-foreground ring-1 ring-white/80">
-            HW
+            BM
           </div>
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm font-medium text-foreground">
-              Harrison Whittle
+              Brad Mitchell
             </div>
             <div className="truncate text-xs text-muted-foreground">Admin</div>
           </div>
