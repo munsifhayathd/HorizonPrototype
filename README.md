@@ -33,6 +33,13 @@ Change a value, commit, push — Vercel auto-deploys to the same URL in ~60s.
 Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS · recharts ·
 lucide-react · Instrument Serif + Geist.
 
+### Charts (recharts)
+
+Dashboard charts live in `components/charts/` and share styling via
+`lib/chart-theme.ts`. Pie charts use `SegmentPieChart` with data shaped as
+`{ name, value }[]`. See [CLAUDE.md](CLAUDE.md#using-recharts) for the full
+component map and a pie chart example.
+
 ## Deploy
 
 Auto-deploy is wired from `main` to Vercel project `horizon-prototype` in

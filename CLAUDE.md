@@ -79,7 +79,8 @@ components/
 │   ├── adoption-line-chart.tsx    AreaChart — AI tooling adoption
 │   ├── pipeline-bar-chart.tsx     Horizontal BarChart — lifecycle pipeline
 │   ├── team-adoption-chart.tsx    BarChart — adoption by team
-│   ├── autonomy-gauge.tsx         Custom SVG radial gauge — Autonomy Index
+│   ├── segment-pie-chart.tsx      PieChart — reusable segment/distribution pie
+│   ├── autonomy-gauge.tsx         Semi-circle Pie gauge — Autonomy Index
 │   └── mini-sparkline.tsx         Inline sparkline for KPI cards
 ├── dashboard/
 │   ├── sidebar.tsx                Left nav + account chip
