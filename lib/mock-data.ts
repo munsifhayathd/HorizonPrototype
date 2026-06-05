@@ -21,6 +21,12 @@ export const lifecyclePipeline = [
   { phase: "Steward",   count: 9,  share: 0.06 },
 ];
 
+export const deliveryMix = [
+  { name: "Autonomous", value: 62 },
+  { name: "Co-piloted", value: 28 },
+  { name: "Manual",     value: 10 },
+];
+
 export const teamAdoption = [
   { team: "Engineering", value: 92 },
   { team: "Research",    value: 88 },
