@@ -55,6 +55,13 @@ export const ledger: ReadonlyArray<{
   { id: "HD-2168", title: "Hallmark design tokens v1.4",      practice: "Studio",    author: "Autonomous", at: "Sun",        kind: "autonomous", note: "53 component diffs proposed" },
 ];
 
+/** Share of recent ships by delivery mode (pie chart) */
+export const shipTypeMix = [
+  { label: "Autonomous", value: 71 },
+  { label: "Co-piloted", value: 18 },
+  { label: "Manual",     value: 11 },
+];
+
 export const practices = [
   { name: "Atelier",   focus: "Autonomous delivery",            count: 14, autonomy: 0.84 },
   { name: "Forge",     focus: "Platform engineering",           count: 11, autonomy: 0.62 },

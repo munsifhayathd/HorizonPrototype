@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AdoptionLineChart } from "@/components/charts/adoption-line-chart";
 import { PipelineBarChart } from "@/components/charts/pipeline-bar-chart";
+import { ShipMixPieChart } from "@/components/charts/ship-mix-pie-chart";
 import { TeamAdoptionChart } from "@/components/charts/team-adoption-chart";
 import { AutonomyGauge } from "@/components/charts/autonomy-gauge";
 import { ChartCard } from "@/components/dashboard/chart-card";
@@ -17,6 +18,7 @@ import {
   sparkB,
   sparkC,
   sparkD,
+  shipTypeMix,
 } from "@/lib/mock-data";
 
 const SPARKS = [sparkA, sparkB, sparkC, sparkD];
@@ -94,7 +96,7 @@ export default function DashboardPage() {
 
       <section
         id="pipeline"
-        className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2"
+        className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3"
       >
         <ChartCard
           title="Lifecycle pipeline"
@@ -107,6 +109,12 @@ export default function DashboardPage() {
           description="Percentage of AI toolchain usage per department"
         >
           <TeamAdoptionChart data={teamAdoption} />
+        </ChartCard>
+        <ChartCard
+          title="Ship mix"
+          description="Share of recent deliveries by delivery mode"
+        >
+          <ShipMixPieChart data={shipTypeMix} />
         </ChartCard>
       </section>
 
