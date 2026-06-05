@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AdoptionLineChart } from "@/components/charts/adoption-line-chart";
+import { DeliveryMixPieChart } from "@/components/charts/delivery-mix-pie-chart";
 import { PipelineBarChart } from "@/components/charts/pipeline-bar-chart";
 import { TeamAdoptionChart } from "@/components/charts/team-adoption-chart";
 import { AutonomyGauge } from "@/components/charts/autonomy-gauge";
@@ -8,6 +9,7 @@ import { StatCard } from "@/components/dashboard/stat-card";
 import { CHART_COLORS } from "@/lib/chart-theme";
 import {
   adoptionCurve,
+  deliveryMix,
   lifecyclePipeline,
   teamAdoption,
   kpis,
@@ -94,7 +96,7 @@ export default function DashboardPage() {
 
       <section
         id="pipeline"
-        className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2"
+        className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3"
       >
         <ChartCard
           title="Lifecycle pipeline"
@@ -107,6 +109,12 @@ export default function DashboardPage() {
           description="Percentage of AI toolchain usage per department"
         >
           <TeamAdoptionChart data={teamAdoption} />
+        </ChartCard>
+        <ChartCard
+          title="Delivery mix"
+          description="47 May ships by execution mode"
+        >
+          <DeliveryMixPieChart data={deliveryMix} />
         </ChartCard>
       </section>
 

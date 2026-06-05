@@ -30,6 +30,13 @@ export const teamAdoption = [
   { team: "Finance",     value: 41 },
 ];
 
+/** May delivery mix by execution mode — feeds the dashboard pie chart. */
+export const deliveryMix = [
+  { label: "Autonomous", count: 29, share: 0.62 },
+  { label: "Co-piloted", count: 11, share: 0.24 },
+  { label: "Manual",     count: 7,  share: 0.14 },
+];
+
 export const kpis = [
   { label: "Autonomy Index",   value: "87",     unit: "/100",   delta: "+12",   trend: "up"   as const, foot: "vs. Q1 — across 47 practices" },
   { label: "Cycle Time",       value: "3.2",    unit: "days",   delta: "−10.8", trend: "down" as const, foot: "down from 14d, twelve months ago" },
